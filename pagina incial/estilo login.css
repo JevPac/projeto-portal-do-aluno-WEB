@@ -1,0 +1,14 @@
+div {
+   border-radius: 8px;
+    margin: 30px auto;
+    border: 500px;
+    height: 350px;
+    width: 250px;
+    color: rgb(255, 213, 0);
+    background-color: darkblue;
+}
+.cabeça {
+    margin-left: auto;
+    color:rgb(255, 213, 0);
+    font-family: 'Times New Roman';
+}
