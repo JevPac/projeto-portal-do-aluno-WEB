@@ -1,14 +1,24 @@
-div {
-   border-radius: 8px;
-    margin: 30px auto;
-    border: 500px;
-    height: 350px;
-    width: 250px;
-    color: rgb(255, 213, 0);
-    background-color: darkblue;
+* {
+    margin: 0px;
+    padding: 0px;
 }
-.cabeça {
-    margin-left: auto;
-    color:rgb(255, 213, 0);
-    font-family: 'Times New Roman';
+h1 {
+    text-align: center;
+    
+}
+section {
+  background-color:rgb(18, 0, 120);
+  height: 100px;
+
+}
+.cor_ouro {
+   color: gold;
+}
+div {
+    margin: auto;
+    border-radius: 4px;
+    padding: 30px;
+    height: 300px;
+    width: 100px;
+   background-color: aqua ;
 }
