@@ -1,105 +1,206 @@
-/* 1. Body styles (Flexbox para centralizar tudo na tela) */
+/* --- Configuração Global --- */
 body {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 12vw; 
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #f4f7f6;
-    font-family: sans-serif;
+    background: radial-gradient(circle at top right, #e0eafc, #eef2f3); 
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased; 
 }
 
-/* 2. Main container (o cartão branco em si) */
+/* --- O Cartão Premium (Agora Maior e Mais Elegante) --- */
 .main-container {
     background-color: #ffffff;
-    border-radius: 15px;
-    padding: 30px; /* Aumentei um pouco o padding para dar mais respiro */
-    max-width: 400px;
-    width: 90%; /* Para mobile responsiveness, para não quebrar em telas pequenas */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 24px; /* Bordas um pouco mais arredondadas para combinar com o tamanho maior */
+    padding: 45px 50px; /* Aumentei bastante o respiro interno para não ficar espremido */
+    max-width: 480px; /* O cartão agora é consideravelmente mais largo */
+    width: 90%; 
+    box-sizing: border-box;
+    box-shadow: 
+        0px 8px 16px rgba(0, 0, 0, 0.02),
+        0px 16px 32px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.8); 
 }
 
-/* 3. Estilos de texto (título e parágrafo) */
+/* --- Logo --- */
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px; 
+    /* Removi o transform: scale daqui para controlarmos o tamanho apenas pelo HTML */
+}
+
+/* --- Tipografia (Fontes levemente maiores para acompanhar o cartão) --- */
 h1 {
     color: #1e3a8a;
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 15px;
+    font-size: 24px; /* Título com mais presença */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 0; 
+    margin-bottom: 12px;
+    text-align: center;
 }
 
-p {
-    color: #666666;
-    font-size: 14px;
-    margin-bottom: 20px;
+.subtitle {
+    color: #64748b;
+    font-size: 14.5px; /* Subtítulo um pouco maior */
+    line-height: 1.6;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-/* 4. Input group (a caixa que engloba ícone e campo) */
+/* --- Caixa do CPF (O Input-Group) --- */
 .input-group {
-    border: 1px solid #cccccc;
-    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    border-radius: 12px;
     display: flex;
-    align-items: center; /* Centraliza ícone e campo verticalmente */
-    padding: 10px;
-    margin-bottom: 15px; /* Espaço para o parágrafo debaixo */
+    align-items: center;
+    padding: 14px 18px; /* Mais gordinho */
+    margin-bottom: 15px;
+    transition: all 0.25s ease; 
 }
 
-/* 5. Espaçamento para o ícone local */
+.input-group:focus-within {
+    border-color: #2563eb; 
+    background-color: #ffffff;
+    box-shadow: 0px 0px 0px 4px rgba(37, 99, 235, 0.1); 
+}
+
 .input-group img {
-    margin-right: 15px; /* Dá um espacinho entre o ícone e o texto CPF */
+    margin-right: 15px;
+    opacity: 0.5;
+    transition: all 0.25s ease;
 }
 
-/* 6. Container do texto CPF e input (organizados verticalmente) */
-.input-group > div {
+.input-group:focus-within img {
+    opacity: 1;
+}
+
+.input-text-area {
     display: flex;
-    flex-direction: column; /* Empilha o label e o input */
+    flex-direction: column;
+    width: 100%;
 }
 
 .input-group label {
-    color: #333;
-    font-size: 12px;
-    margin-bottom: 2px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
-/* 7. O campo de input em si (agora limpo e integrado) */
+/* --- Campo de Digitação --- */
 input {
     border: none;
     outline: none;
-    padding: 0; /* Remove padding padrão para ficar limpo */
-    font-size: 16px; /* Tamanho de fonte padrão bom */
-    color: #333;
+    padding: 0;
+    background: transparent;
+    font-size: 16px; /* Fonte do input aumentada */
+    color: #0f172a; 
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    width: 100%;
 }
 
-/* 8. Botão (com todos os efeitos e cores) */
+input::placeholder {
+    color: #94a3b8;
+}
+
+/* --- Texto Informativo Secundário --- */
+.info-text {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 32px; /* Mais espaço antes do botão */
+    line-height: 1.5;
+}
+
+/* --- Botão Principal --- */
 button {
     background-color: #1e3a8a;
     color: #ffffff;
     border: none;
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 12px;
+    padding: 16px; /* Botão mais alto e imponente */
     width: 100%;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Efeito suave no hover */
+    box-shadow: 0px 4px 12px rgba(30, 58, 138, 0.15); 
+    transition: all 0.25s ease;
 }
 
-/* 9. Botão: Efeito de mouse sobre (hover) */
 button:hover {
-    background-color: #152b66; /* Azul mais escuro no hover */
+    background-color: #152b66;
+    transform: translateY(-1.5px); 
+    box-shadow: 0px 6px 20px rgba(30, 58, 138, 0.25);
 }
 
-/* 10. Link de Voltar (centralizado e com estilo) */
-a {
-    color: #1e3a8a;
+button:active {
+    transform: translateY(0); 
+}
+
+/* --- Link de Voltar --- */
+.back-link {
+    color: #64748b; 
     text-decoration: none;
     display: block;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 25px;
     font-size: 14px;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    transition: all 0.25s ease;
 }
 
-/* 11. Link: Efeito de mouse sobre (hover) */
-a:hover {
-    text-decoration: underline; /* Adiciona sublinhado apenas no hover */
-    color: #152b66;
+.back-link:hover {
+    color: #1e3a8a; 
+}
+
+/* --- Camada de Imagens de Fundo --- */
+.background-decorations {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    pointer-events: none; 
+    overflow: hidden; 
+}
+
+.bg-ondas {
+    position: absolute;
+    bottom: -10vh;
+    left: 0;
+    width: 100%; 
+    object-fit: cover; 
+    opacity: 0.8; 
+}
+
+.bg-estudante {
+    position: absolute;
+    bottom: 0; 
+    right: 5%; /* Afastei ele levemente da borda direita para equilibrar */
+    height: 65vh; 
+    max-height: 600px;
+    width: auto; 
+}
+
+/* --- Responsividade para ecrãs menores --- */
+@media (max-width: 900px) {
+    body {
+        justify-content: center; 
+        padding-left: 0;
+    }
+    .bg-estudante {
+        display: none; 
+    }
+    .main-container {
+        padding: 35px 25px; /* Reduz o padding em telas de celular */
+    }
 }
