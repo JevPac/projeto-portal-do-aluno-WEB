@@ -107,7 +107,8 @@ body {
 /* Layout Estrutural */
 .row-hero {
     display: grid;
-    grid-template-columns: 2.5fr 1fr;
+    /* Criando 3 colunas: a primeira para imagem, a do meio maior para a busca, e a terceira para o status */
+    grid-template-columns: 1.2fr 2fr 1fr; 
     gap: 10px;
 }
 
@@ -127,11 +128,16 @@ body {
     position: relative;
     box-shadow: var(--shadow-soft);
     display: flex;
-    align-items: center;
+    align-items: center;      /* Garante que a caixinha interna fique centralizada verticalmente */
+    justify-content: center;  /* Garante que a caixinha interna fique no centro horizontal */
 }
-
 .banner-inner {
-    max-width: 75%;
+    width: 100%;             /* Permite que ela use o espaço necessário */
+    max-width: 85%;          /* Aumentamos um pouquinho o limite para dar mais espaço para a barra */
+    display: flex;
+    flex-direction: column;  /* Alinha os itens um embaixo do outro (Título, depois Texto, depois Busca) */
+    align-items: center;     /* Centraliza o texto e a barra de pesquisa horizontalmente no meio */
+    text-align: center;      /* Garante que o texto de dentro fique centralizado na própria linha */
 }
 
 .search-banner h2 {
@@ -146,11 +152,15 @@ body {
     margin-bottom: 10px;
 }
 
+/* Pequeno ajuste opcional na barra de pesquisa para ela não ficar gigante se centralizada */
 .search-group {
     display: flex;
     background-color: #FFFFFF;
     border-radius: var(--round-md);
     padding: 2px;
+    width: 100%;             /* Faz ela ocupar a largura do banner-inner */
+    max-width: 450px;        /* Define um tamanho máximo limite para ficar esteticamente bonito no centro */
+    margin: 0 auto;          /* Reforça a centralização */
 }
 
 .search-group input {
@@ -554,6 +564,13 @@ body {
 .tag-table.atrasado {
     background-color: #FDF1F1;
     color: var(--brand-color);
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--round-lg);
 }
 
 /* Responsividade Básica */

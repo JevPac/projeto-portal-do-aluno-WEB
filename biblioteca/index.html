@@ -15,7 +15,7 @@
 
         <header class="main-header">
             <div class="app-logo">
-                <img src="../pagina incial/imagens/logo.png" alt="Logo UFAC" class="logo-crest">
+                <img src="C:\Users\WEB2026\Desktop\Web-Academy\Front-End Iniciante\projeto-portal-do-aluno-WEB\imagens\logo.png" alt="Logo UFAC" class="logo-crest">
             </div>
 
             <div class="user-profile">
@@ -33,8 +33,9 @@
         </header>
 
         <main class="dashboard-content">
-
             <div class="row-hero">
+                <img src="C:\Users\WEB2026\Desktop\Web-Academy\Front-End Iniciante\projeto-portal-do-aluno-WEB\imagens\Gemini_Generated_Image_7nm13i7nm13i7nm1.png" alt="Estudantes na Biblioteca" class="hero-image">
+
                 <section class="search-banner">
                     <div class="banner-inner">
                         <h2>Pesquisar Biblioteca Central</h2>
@@ -396,6 +397,17 @@
     </div>
 
     <script>
+        function renovarLivro(botao) {
+            alert("Livro renovado com sucesso! O novo prazo já consta no sistema.");
+        
+        // Muda o visual do botão clicado
+            botao.innerText = "Renovado";
+            botao.style.backgroundColor = "var(--bg-success)";
+            botao.style.color = "var(--color-success)";
+            botao.style.borderColor = "var(--color-success)";
+            botao.style.cursor = "default";
+            botao.disabled = true; // Impede clicar de novo
+        }
         // Função para abrir os modais
         function abrirModal(id, event) {
             if(event) event.preventDefault(); 
