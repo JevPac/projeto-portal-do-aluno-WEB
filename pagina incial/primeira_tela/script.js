@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 5. SUBMIT E SALVAMENTO ---
     // --- 5. SUBMIT E REDIRECIONAMENTO ---
+    // --- 5. SUBMIT E REDIRECIONAMENTO ---
     form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Impede o envio do form padrão
+        e.preventDefault();
 
-        // Salvar ou remover CPF no localStorage
         if (lembrarCheckbox.checked) {
             const cpfLimpo = cpfInput.value.replace(/\D/g, '');
             localStorage.setItem('cpfSalvo', cpfLimpo);
@@ -62,8 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('cpfSalvo');
         }
 
-        // REDIRECIONAMENTO:
-        // O window.location.href faz o navegador "navegar" para o novo arquivo
-        window.location.href = 'menu.html';
+        // Tente usar o caminho relativo simples. 
+        // Se o arquivo está na MESMA pasta, basta o nome.
+        // O "./" diz para o navegador olhar na pasta atual onde o script está
+        window.location.href = './menu.html';
     });
 });
