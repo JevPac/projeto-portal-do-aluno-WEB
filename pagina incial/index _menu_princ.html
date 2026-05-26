@@ -1,56 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layout Responsivo</title>
+    <title>Portal do Aluno | UFAC</title>
     <link rel="stylesheet" href="estilo menu.css">
 </head>
-<body>
 
-    <div class="container">
-        
-        <header class="banner">
-            <h1>Portal do aluno</h1>
-            <h2 class="H2-banner">Menu Principal</h2>
+<body>
+    <main class="main-container">
+        <header class="hero-impact">
+            <h1>Olá, Sávio!</h1>
+            <p>Sistemas de Informação | 2026.1 | Período Ativo</p>
         </header>
 
-        <div class="content-wrapper">
-            
-            <section class="grid-medio">
-                <div class="card-medio-1">
-                    <h2 class="h2-card\M">informações aqui como e-ticket</h2>
-                    <p>16.700 ou 17.700?</p>
-                    <p>texto pra ver formato</p>
+        <section class="grid-dashboard">
+            <div class="col-main">
+                <div class="card card-horizontal">
+                    <div class="info-ticket">
+                        <h2>💳 E-ticket RU</h2>
+                        <p>Saldo: <strong>R$ 42,50</strong></p>
+                    </div>
+                    <a href="gerenciar.html" class="btn-action">Gerenciar</a>
                 </div>
-                <div class="card-medio-2">
-                    <h2  class="h2-card\M">Noticias aqui?</h2>
-                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-            </section>
 
-            <h3 class="secao-titulo">Serviços</h3>
+                <div class="card">
+                    <h2>📢 Avisos e Comunicados</h2>
+                    <ul class="lista-avisos">
+                        <li>Matrículas: 27/05 a 30/05</li>
+                        <li>WebAcademy: Manutenção em 30/05</li>
+                        <li>Formatura: Verifique seu status</li>
+                    </ul>
+                </div>
 
-            <section class="grid-quatro">
-                <div class="card-menor">
-                    <h4>Restaurante Universitario</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mollis pretium lorem primis.</p>
+                <div class="card">
+                    <h2>📝 Notas Recentes</h2>
+                    <div class="nota-item"><span>Estrutura de Dados</span> <strong>9.0</strong></div>
+                    <div class="nota-item"><span>Banco de Dados</span> <strong>8.5</strong></div>
+                    <div class="nota-item"><span>Engenharia de Software</span> <strong>9.2</strong></div>
                 </div>
-                <div class="card-menor">
-                    <h4>Biblioteca</h4>
-                    <p>Feugiat proin integer elementum litora turpis rhoncus sit. Velit tempor proin.</p>
-                </div>
-                <div class="card-menor">
-                    <h4>Horarios</h4>
-                    <p>Condimentum sed pretium id habitant habitasse suspendisse. Nunc pretium erat.</p>
-                </div>
-                <div class="card-menor">
-                    <h4>Relatorios</h4>
-                    <p>Sociis habitasse curabitur tristique platea mus sodales. Ipsum pretium eleifend.</p>
-                </div>
-            </section>
+            </div>
 
-        </div> </div>
+            <div class="col-side">
+                <div class="card">
+                    <h2>📈 Progresso</h2>
+                    <div class="progress-circle">85%</div>
+                </div>
+                <div class="card">
+                    <h2>🎓 Média Geral</h2>
+                    <p class="gpa">8.4</p>
+                </div>
+            </div>
+        </section>
 
+        <section class="grid-services">
+            <a href="#" class="card-service"><span class="icon-big">🍽️</span>Restaurante</a>
+            <a href="#" class="card-service"><span class="icon-big">📚</span>Biblioteca</a>
+            <a href="#" class="card-service"><span class="icon-big">⏰</span>Horários</a>
+            <a href="#" class="card-service"><span class="icon-big">📊</span>Relatórios</a>
+            <a href="#" class="card-service"><span class="icon-big">📄</span>Docs</a>
+            <a href="#" class="card-service"><span class="icon-big">💬</span>Suporte</a>
+        </section>
+    </main>
 </body>
+
 </html>
