@@ -1,24 +1,101 @@
-* {
-    margin: 0px;
-    padding: 0px;
-}
-h1 {
-    text-align: center;
-    
-}
-section {
-  background-color:rgb(18, 0, 120);
-  height: 100px;
+/* Reset básico e fontes */
+    * {
+        margin: 0;
+        padding: 0;
+         box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
 
-}
-.cor_ouro {
-   color: gold;
-}
-div {
-    margin: auto;
-    border-radius: 4px;
-    padding: 30px;
-    height: 300px;
-    width: 100px;
-   background-color: aqua ;
-}
+        /* Container Principal para centralizar o conteúdo */
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* 1. Banner no Topo */
+        .banner {
+            width: 100%;
+            background: linear-gradient(135deg, #08036a, #002fff);
+            color: gold;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            
+        }
+        .H2-banner {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: goldenrod;
+        }
+        /* Seção de Conteúdo Centralizado (Largura Média) */
+        .content-wrapper {
+            max-width: 1000px; /* Limita a largura do miolo do site */
+            margin: 0 auto;   /* Centraliza na tela */
+        }
+
+        /* 2. Grid Médio no Centro */
+        .grid-medio {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #001a6f;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .card-medio-1 {
+            background: #e4ecea;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid #001a6f;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .card-medio-2 {
+            background:  #e4ecea;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid #001a6f;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Título da seção dos 4 grids */
+        .secao-titulo {
+            text-align: left;
+            margin-bottom: 20px;
+            color: gold;
+            font-size: 1.75rem;
+        }
+
+        /* 3. Grid de 4 Colunas Menores */
+        .grid-quatro {
+            display: grid;
+            /* Cria 4 colunas em telas grandes, mas se adapta em telas menores */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .card-menor {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card-menor:hover {
+            transform: translateY(-5px);
+        }
+        .card-menor h4 {
+            color: #0e0884;
+            margin-bottom: 10px;
+        }
