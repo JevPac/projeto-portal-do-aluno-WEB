@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Aluno - Horários</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+</head>
+
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        🌙
+    </button>
+    <div class="main-container">
+
+        <h1 class="main-title">Horários</h1>
+
+        <div class="profile-card">
+            <div class="avatar-container">
+                <img class="avatar-icon" src="img/icon-profile.png" alt="Foto de perfil">
+            </div>
+
+            <div class="info-container">
+                <div class="info-group">
+                    <p class="info-label">Curso:</p>
+                    <p class="info-value course-title">Sistemas de Informação</p>
+                </div>
+                <div class="info-group">
+                    <p class="info-label">Nome:</p>
+                    <p class="info-value">Sávio Monteiro dos Santos</p>
+                </div>
+                <div class="info-group">
+                    <p class="info-label">Matrícula:</p>
+                    <p class="info-value">20241000001</p>
+                </div>
+                <div class="info-group">
+                    <p class="info-label">Ingresso:</p>
+                    <p class="info-value">2024.1</p>
+                </div>
+                <div class="info-group">
+                    <p class="info-label">E-mail Acadêmico:</p>
+                    <p class="info-value">savio.monteiro@sou.ufac.br</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule-container">
+
+            <div class="Filter">
+                <h2 class="filter-title">Filtrar por período:</h2>
+                <div class="filter-controls">
+                    <select name="periodos" id="periodos">
+                        <option value="2026.2">2026.2</option>
+                        <option value="2026.1">2026.1</option>
+                        <option value="2025.2">2025.2</option>
+                        <option value="2025.1">2025.1</option>
+                        <option value="2024.2">2024.2</option>
+                        <option value="2024.1">2024.1</option>
+                    </select>
+                    <button type="button" class="btn-pdf">Baixar PDF</button>
+                </div>
+            </div>
+
+            <div class="table-responsive-wrapper">
+                <table class="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>QUADRO DE HORÁRIOS</th>
+                            <th>SEGUNDA</th>
+                            <th>TERÇA</th>
+                            <th>QUARTA</th>
+                            <th>QUINTA</th>
+                            <th>SEXTA</th>
+                            <th>SÁBADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="row-large">
+                            <td class="time-col">07:30 - 09:10</td>
+                            <td class="filled-cell">Banco de Dados I<br><span class="room">T. S30-5P</span></td>
+                            <td></td>
+                            <td class="filled-cell">Comunicação e Redes<br><span class="room">T. S30-5P</span></td>
+                            <td class="filled-cell">Pesquisa Operacional<br><span class="room">T. S30-5P</span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="row-small">
+                            <td class="time-col">09:10 - 09:20</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="row-large">
+                            <td class="time-col">09:20 - 11:00</td>
+                            <td class="filled-cell">Pesquisa Operacional<br><span class="room">T. S30-5P</span></td>
+                            <td></td>
+                            <td class="filled-cell">Comunicação e Redes<br><span class="room">T. S30-5P</span></td>
+                            <td></td>
+                            <td class="filled-cell">Contabilidade e Custos<br><span class="room">T. S30-5P</span></td>
+                            <td></td>
+                        </tr>
+                        <tr class="row-small">
+                            <td class="time-col">11:00 - 11:10</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="row-large">
+                            <td class="time-col">11:10 - 12:50</td>
+                            <td></td>
+                            <td></td>
+                            <td class="filled-cell">Banco de Dados I<br><span class="room">T. S30-5P</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- MODAL -->
+
+    <div class="modal" id="modal">
+
+        <div class="modal-content">
+
+            <span class="close" id="closeModal">
+                &times;
+            </span>
+
+            <h2 id="modalTitle"></h2>
+
+            <p id="modalHorario"></p>
+
+            <p id="modalProfessor"></p>
+
+            <p id="modalSala"></p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
