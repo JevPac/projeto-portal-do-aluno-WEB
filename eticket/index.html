@@ -5,7 +5,1317 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UFAC – Restaurante Universitário</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:       #1A56DB;
+  --blue-light: #EEF3FF;
+  --text:       #111827;
+  --muted:      #6B7280;
+  --border:     #E5E7EB;
+  --white:      #FFFFFF;
+  --bg:         #F3F4F6;
+  --radius:     14px;
+  --shadow:     0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  --green:      #22C55E;
+  --green-light:#DCFCE7;
+  --red:        #EF4444;
+  --red-light:  #FEE2E2;
+  --yellow:     #F5A623;
+  --yellow-light:#FEF9C3;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════
+   SIDEBAR
+══════════════════════════════ */
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 16px;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+}
+
+.logo {
+  padding: 0 8px;
+  margin-bottom: 36px;
+}
+
+.logo-icon img {
+  height: 36px;
+  object-fit: contain;
+}
+
+.logo-fallback {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--blue);
+  letter-spacing: -.3px;
+}
+
+nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.nav-item:hover { background: var(--bg); color: var(--text); }
+.nav-item.active {
+  background: var(--blue-light);
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.nav-bottom { margin-top: auto; }
+
+/* ══════════════════════════════
+   MAIN
+══════════════════════════════ */
+.main {
+  margin-left: 220px;
+  flex: 1;
+  padding: 36px 40px;
+}
+
+/* ══════════════════════════════
+   PAGE VISIBILITY
+══════════════════════════════ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════════════
+   TOPBAR
+══════════════════════════════ */
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.topbar-left h1 { font-size: 26px; font-weight: 800; letter-spacing: -.5px; }
+.topbar-left p  { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  background: linear-gradient(120deg, #EEF3FF 0%, #DBEAFE 60%, #C7D7FB 100%);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  min-height: 190px;
+}
+
+.hero-text h2 {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -.5px;
+  max-width: 320px;
+}
+
+.hero-text p {
+  color: #4B5563;
+  font-size: 14px;
+  margin-top: 10px;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.hero-image img {
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* ══════════════════════════════
+   BUTTONS
+══════════════════════════════ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue);
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(26,86,219,.3);
+  transition: background .15s, transform .1s, box-shadow .15s;
+}
+
+.btn-primary:hover {
+  background: #3B6FE8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(26,86,219,.4);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 24px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.btn-secondary:hover { background: var(--bg); border-color: #D1D5DB; }
+
+.btn-change {
+  background: var(--blue-light);
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  transition: background .15s;
+  white-space: nowrap;
+}
+
+.btn-change:hover { background: #dde8fd; }
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red-light);
+  color: var(--red);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-danger:hover { background: #fecaca; }
+
+/* ══════════════════════════════
+   SECTION & CARD
+══════════════════════════════ */
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: -.3px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px;
+}
+
+/* ══════════════════════════════
+   STEPPER
+══════════════════════════════ */
+.stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  position: relative;
+}
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: calc(50% + 18px);
+  right: calc(-50% + 18px);
+  height: 2px;
+  background: var(--border);
+  transition: background .3s;
+}
+
+.step.done:not(:last-child)::after { background: var(--blue); }
+
+.step-circle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  z-index: 1;
+  transition: background .2s, color .2s, box-shadow .2s;
+}
+
+.step.active .step-circle {
+  background: var(--blue);
+  color: white;
+  box-shadow: 0 0 0 4px rgba(26,86,219,.15);
+}
+
+.step.done .step-circle {
+  background: var(--blue);
+  color: white;
+}
+
+.step.done .step-circle::after {
+  content: '✓';
+  position: absolute;
+  font-size: 14px;
+}
+
+.step.done .step-circle .num { display: none; }
+
+.step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.step.active .step-label { color: var(--blue); }
+.step.done .step-label { color: var(--text); }
+
+/* ══════════════════════════════
+   TABS (buy ticket)
+══════════════════════════════ */
+.tab { }
+.tab.hidden { display: none; }
+
+.selection-header { margin-bottom: 24px; }
+.selection-header h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.selection-header p { font-size: 14px; color: var(--muted); }
+
+/* ── Meal grid ── */
+.meal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.meal-card {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 20px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  position: relative;
+}
+
+.meal-card:hover { border-color: #93B4F8; background: #FAFBFF; }
+
+.meal-card.selected {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+.meal-radio {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  position: absolute;
+  top: 16px; right: 16px;
+  transition: border-color .15s;
+}
+
+.meal-card.selected .meal-radio {
+  border-color: var(--blue);
+  border-width: 5px;
+}
+
+.meal-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+
+.meal-icon svg { width: 22px; height: 22px; }
+.meal-icon.blue   { background: #DBEAFE; }
+.meal-icon.yellow { background: #FEF3C7; }
+.meal-icon.green  { background: #DCFCE7; }
+
+.refeicao  { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.ticket-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+.preco-ticket { font-size: 16px; font-weight: 800; color: var(--blue); }
+
+/* ── Quantity ── */
+.selected-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+}
+
+.summary-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--blue-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.summary-icon svg { width: 22px; height: 22px; }
+
+.summary-info, .summary-price-block { flex: 1; }
+
+.summary-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+.summary-value { font-size: 15px; font-weight: 700; }
+.summary-unit-price { font-size: 15px; font-weight: 700; color: var(--blue); }
+
+.qty-section { margin-bottom: 28px; }
+.qty-label { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.qty-hint { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+
+.qty-options { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.qty-card {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 28px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: border-color .15s, background .15s;
+}
+
+.qty-card:hover { border-color: #93B4F8; }
+
+.qty-card.selected-qty {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+.qty-number { font-size: 22px; font-weight: 800; }
+.qty-sub { font-size: 12px; color: var(--muted); font-weight: 500; }
+.qty-card.selected-qty .qty-number { color: var(--blue); }
+
+.total-box {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+
+.total-row { display: flex; justify-content: space-between; align-items: center; }
+.total-label { font-size: 14px; color: var(--muted); }
+.total-value { font-size: 14px; font-weight: 600; }
+.total-divider { height: 1px; background: var(--border); margin: 14px 0; }
+.total-final-label { font-size: 15px; font-weight: 700; }
+.total-final { font-size: 20px; font-weight: 800; color: var(--blue); }
+
+.card-footer { display: flex; justify-content: flex-end; padding-top: 8px; }
+.card-footer.two-buttons { justify-content: space-between; }
+
+/* ── Payment ── */
+.payment-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+
+.payment-option:hover { border-color: #93B4F8; background: #FAFBFF; }
+
+.payment-option.selected {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+
+.payment-radio {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  transition: border-color .15s;
+  flex-shrink: 0;
+}
+
+.payment-option.selected .payment-radio {
+  border-color: var(--blue);
+  border-width: 5px;
+}
+
+.payment-option-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--blue-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.payment-option-icon svg { width: 20px; height: 20px; }
+.payment-option-icon.pix-icon { background: var(--green-light); }
+
+.payment-option-name { font-size: 14px; font-weight: 700; }
+.payment-option-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+.payment-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.form-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+
+.form-group label { font-size: 13px; font-weight: 600; color: var(--text); }
+
+.form-group input,
+.form-group select {
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color .15s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus { border-color: var(--blue); }
+
+.input-icon-wrap { position: relative; }
+.input-icon-wrap input { padding-right: 42px; width: 100%; }
+.input-icon-wrap svg {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+}
+
+/* Save card checkbox */
+.save-card-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--blue-light);
+  border-radius: 10px;
+  border: 1.5px solid #C7D7FB;
+  cursor: pointer;
+}
+
+.save-card-row input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: var(--blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.save-card-row label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.save-card-row span {
+  font-size: 12px;
+  color: #4B5563;
+  font-weight: 400;
+}
+
+/* Saved cards in payment */
+.saved-cards-section {
+  margin-bottom: 20px;
+}
+
+.saved-cards-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.saved-card-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: border-color .15s, background .15s;
+}
+
+.saved-card-option:hover { border-color: #93B4F8; background: #FAFBFF; }
+.saved-card-option.selected { border-color: var(--blue); background: var(--blue-light); }
+
+.saved-card-radio {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  transition: border-color .15s;
+}
+.saved-card-option.selected .saved-card-radio { border-color: var(--blue); border-width: 5px; }
+
+.card-brand-badge {
+  background: linear-gradient(135deg, #1A56DB, #3B82F6);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 5px;
+  letter-spacing: .5px;
+  flex-shrink: 0;
+}
+
+.saved-card-info { flex: 1; }
+.saved-card-number { font-size: 14px; font-weight: 700; }
+.saved-card-expiry { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.divider-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+.divider-or::before,
+.divider-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Pix ── */
+.pix-container { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+.pix-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #374151;
+  background: var(--green-light);
+  border-radius: 10px;
+  padding: 12px 16px;
+  width: 100%;
+}
+
+.qr-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.qr-code {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.qr-valor { font-size: 20px; font-weight: 800; color: var(--text); }
+.qr-expiry { font-size: 13px; color: var(--muted); }
+
+.pix-copy-section { width: 100%; }
+.pix-copy-label { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+
+.pix-copy-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--bg);
+}
+
+.pix-code {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue);
+  color: white;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   PLACEHOLDER (step 4)
+══════════════════════════════ */
+.placeholder-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+  text-align: center;
+}
+
+.placeholder-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.placeholder-icon.success { background: var(--green-light); }
+.placeholder-icon svg { width: 36px; height: 36px; }
+
+/* ══════════════════════════════
+   MEUS TICKETS PAGE
+══════════════════════════════ */
+.tickets-filter-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+.filter-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.ticket-item {
+  background: var(--white);
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  transition: transform .15s, box-shadow .15s;
+}
+
+.ticket-item:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+
+.ticket-item-header {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1.5px dashed var(--border);
+}
+
+.ticket-type-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.ticket-type-icon svg { width: 20px; height: 20px; }
+.ticket-type-icon.blue-icon { background: #DBEAFE; }
+.ticket-type-icon.yellow-icon { background: #FEF3C7; }
+.ticket-type-icon.green-icon { background: #DCFCE7; }
+
+.ticket-item-info { flex: 1; }
+.ticket-item-type { font-size: 14px; font-weight: 700; }
+.ticket-item-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.ticket-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.badge-disponivel { background: var(--green-light); color: #15803D; }
+.badge-usado { background: var(--bg); color: var(--muted); }
+.badge-expirado { background: var(--red-light); color: var(--red); }
+
+.ticket-item-body {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-code { font-size: 12px; font-family: monospace; color: var(--muted); }
+.ticket-price { font-size: 16px; font-weight: 800; color: var(--blue); }
+
+.ticket-qr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-top: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.ticket-qr-btn:hover { background: #dde8fd; }
+.ticket-qr-btn.used { background: var(--bg); color: var(--muted); cursor: default; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+}
+
+.empty-state-icon {
+  width: 64px; height: 64px;
+  background: var(--bg);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.empty-state-icon svg { width: 28px; height: 28px; }
+.empty-state h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.empty-state p { font-size: 14px; }
+
+/* ══════════════════════════════
+   HISTÓRICO PAGE
+══════════════════════════════ */
+.history-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+}
+
+.stat-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 8px; }
+.stat-value { font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+.stat-value.blue { color: var(--blue); }
+.stat-value.green { color: var(--green); }
+.stat-value.text { color: var(--text); }
+.stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+.history-table-wrap {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.history-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.history-table-header h3 { font-size: 16px; font-weight: 700; }
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  background: var(--white);
+}
+
+.search-input-wrap svg { width: 16px; height: 16px; color: var(--muted); flex-shrink: 0; }
+.search-input-wrap input {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  width: 180px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead tr { border-bottom: 1.5px solid var(--border); }
+thead th {
+  padding: 12px 24px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--bg); }
+
+tbody td {
+  padding: 14px 24px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.chip-cafe { background: #DBEAFE; color: #1D4ED8; }
+.chip-almoco { background: #FEF3C7; color: #D97706; }
+.chip-jantar { background: #DCFCE7; color: #15803D; }
+
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-green { background: var(--green); }
+.dot-gray  { background: #9CA3AF; }
+.dot-red   { background: var(--red); }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.pagination-info { font-size: 13px; color: var(--muted); }
+.pagination-btns { display: flex; gap: 6px; }
+
+.page-btn {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+
+.page-btn:hover { border-color: var(--blue); color: var(--blue); }
+.page-btn.active-page { background: var(--blue); border-color: var(--blue); color: white; }
+.page-btn:disabled { opacity: .4; cursor: default; }
+
+/* ══════════════════════════════
+   SALDO E PAGAMENTOS PAGE
+══════════════════════════════ */
+.balance-hero {
+  background: linear-gradient(135deg, #1A56DB 0%, #3B6FE8 60%, #6366F1 100%);
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balance-hero-left h3 { font-size: 14px; font-weight: 500; opacity: .8; margin-bottom: 8px; }
+.balance-hero-left .balance-amount { font-size: 42px; font-weight: 800; letter-spacing: -1.5px; }
+.balance-hero-left .balance-sub { font-size: 13px; opacity: .7; margin-top: 6px; }
+
+.balance-hero-right { display: flex; gap: 12px; flex-shrink: 0; }
+
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+
+.btn-white:hover { opacity: .9; }
+
+.btn-white-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.15);
+  color: white;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,.35);
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.btn-white-outline:hover { background: rgba(255,255,255,.25); }
+
+.payments-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.payments-section-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.payments-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.payments-section-header h3 { font-size: 15px; font-weight: 700; }
+
+.btn-add-small {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.btn-add-small:hover { background: #dde8fd; }
+
+.saved-card-list { padding: 16px 24px; display: flex; flex-direction: column; gap: 12px; }
+
+.saved-card-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  transition: border-color .15s;
+}
+
+.saved-card-row:hover { border-color: #93B4F8; }
+
+.card-visual {
+  width: 52px; height: 34px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1A56DB, #3B82F6);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-visual svg { width: 24px; height: 16px; }
+
+.saved-card-details { flex: 1; }
+.saved-card-name { font-size: 14px; font-weight: 700; }
+.saved-card-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.card-actions { display: flex; gap: 8px; }
+
+.action-icon-btn {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.action-icon-btn:hover { border-color: var(--red); background: var(--red-light); }
+.action-icon-btn svg { width: 15px; height: 15px; color: var(--muted); }
+.action-icon-btn:hover svg { color: var(--red); }
+
+.default-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--green-light);
+  color: #15803D;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+
+/* Add card form */
+.add-card-form {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+
+.add-card-form.open { display: block; }
+.add-card-form h4 { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+
+/* Recent transactions */
+.transactions-list { padding: 0; }
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+
+.transaction-item:last-child { border-bottom: none; }
+.transaction-item:hover { background: var(--bg); }
+
+.transaction-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.transaction-icon svg { width: 18px; height: 18px; }
+.tx-buy { background: var(--blue-light); }
+.tx-refund { background: var(--green-light); }
+
+.transaction-info { flex: 1; }
+.transaction-title { font-size: 14px; font-weight: 600; }
+.transaction-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.transaction-amount { font-size: 15px; font-weight: 800; }
+.amount-neg { color: var(--red); }
+.amount-pos { color: var(--green); }
+
+/* Modal backdrop */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  width: 440px;
+  max-width: 95vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  animation: modalIn .2s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.modal-header h3 { font-size: 18px; font-weight: 800; }
+
+.modal-close {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.modal-close:hover { background: var(--bg); }
+.modal-close svg { width: 16px; height: 16px; }
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+/* QR Modal */
+.qr-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.qr-ticket-type { font-size: 18px; font-weight: 800; }
+.qr-ticket-date { font-size: 14px; color: var(--muted); }
+.qr-ticket-code { font-family: monospace; font-size: 13px; color: var(--muted); }
+
+.hidden { display: none !important; }
+  </style>
 </head>
 <body>
 
@@ -13,26 +1323,35 @@
   <aside class="sidebar">
     <div class="logo">
       <div class="logo-icon">
-         <img src="imagens/logo-ufacv2.png" alt="Logo da Ufac" />
+        <div class="logo-fallback">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 010 8h-1"/>
+            <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+            <line x1="6" y1="1" x2="6" y2="4"/>
+            <line x1="10" y1="1" x2="10" y2="4"/>
+            <line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+          UFAC · RU
+        </div>
       </div>
     </div>
 
     <nav>
-      <a class="nav-item active" href="#">
+      <button class="nav-item active" onclick="showPage('inicio')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
           <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
         Início
-      </a>
-      <a class="nav-item" href="#">
+      </button>
+      <button class="nav-item" onclick="showPage('comprar')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="5" width="20" height="14" rx="2"/>
           <line x1="2" y1="10" x2="22" y2="10"/>
         </svg>
         Comprar Ticket
-      </a>
-      <a class="nav-item" href="#">
+      </button>
+      <button class="nav-item" onclick="showPage('meus-tickets')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
@@ -40,22 +1359,22 @@
           <line x1="16" y1="17" x2="8" y2="17"/>
         </svg>
         Meus Tickets
-      </a>
-      <a class="nav-item" href="#">
+      </button>
+      <button class="nav-item" onclick="showPage('historico')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
           <polyline points="12 6 12 12 16 14"/>
         </svg>
         Histórico
-      </a>
-      <a class="nav-item" href="#">
+      </button>
+      <button class="nav-item" onclick="showPage('pagamentos')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="3" width="20" height="14" rx="2"/>
           <line x1="8" y1="21" x2="16" y2="21"/>
           <line x1="12" y1="17" x2="12" y2="21"/>
         </svg>
         Saldo e Pagamentos
-      </a>
+      </button>
       <div class="nav-bottom">
         <a class="nav-item" href="#">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -72,132 +1391,1095 @@
   <!-- MAIN -->
   <main class="main">
 
-    <!-- Topbar -->
-    <div class="topbar">
-      <div class="topbar-left">
-        <h1>Olá, seja bem-vindo! 👋</h1>
-        <p>Compre seu ticket do Restaurante Universitário de forma rápida e segura.</p>
-      </div>
-      <div class="topbar-right">
+    <!-- ═══════════════════════════ INÍCIO ═══════════════════════════ -->
+    <div class="page active" id="page-inicio">
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1>Olá, seja bem-vindo! 👋</h1>
+          <p>Compre seu ticket do Restaurante Universitário de forma rápida e segura.</p>
         </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-text">
+          <h2>Compre seu ticket do RU de forma simples e rápida</h2>
+          <p>Selecione o tipo de refeição, escolha a quantidade e realize o pagamento.</p>
+        </div>
+        <div class="hero-image">
+          <img src="imagens/ru.png" alt="Restaurante Universitário" onerror="this.style.display='none'"/>
+        </div>
+      </div>
+
+      <p class="section-title">Acesso rápido</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div class="card" style="cursor:pointer;transition:transform .15s,box-shadow .15s;" onclick="showPage('comprar')"
+             onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.12)'"
+             onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:44px;height:44px;background:var(--blue-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </div>
+          <p style="font-weight:700;font-size:15px;margin-bottom:4px;">Comprar Ticket</p>
+          <p style="font-size:13px;color:var(--muted);">Compre tickets para café, almoço ou jantar.</p>
+        </div>
+        <div class="card" style="cursor:pointer;transition:transform .15s,box-shadow .15s;" onclick="showPage('meus-tickets')"
+             onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.12)'"
+             onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:44px;height:44px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <p style="font-weight:700;font-size:15px;margin-bottom:4px;">Meus Tickets</p>
+          <p style="font-size:13px;color:var(--muted);">Veja seus tickets ativos e disponíveis.</p>
+        </div>
+        <div class="card" style="cursor:pointer;transition:transform .15s,box-shadow .15s;" onclick="showPage('pagamentos')"
+             onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.12)'"
+             onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:44px;height:44px;background:var(--yellow-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <p style="font-weight:700;font-size:15px;margin-bottom:4px;">Saldo e Pagamentos</p>
+          <p style="font-size:13px;color:var(--muted);">Gerencie cartões e veja seu saldo.</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Hero Banner (imagem vai aqui) -->
-    <div class="hero">
-      <div class="hero-text">
-        <h2>Compre seu ticket do RU de forma simples e rápida</h2>
-        <p>Selecione o tipo de refeição, escolha a quantidade e realize o pagamento.</p>
-        <button class="btn-primary">Comprar agora</button>
+    <!-- ═══════════════════════════ COMPRAR TICKET ═══════════════════════════ -->
+    <div class="page" id="page-comprar">
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1>Comprar Ticket</h1>
+          <p>Selecione o tipo de refeição, a quantidade e realize o pagamento.</p>
+        </div>
       </div>
-      <div class="hero-image">
-        <!-- Substitua pelo caminho da sua imagem -->
-        <img src="ru.png" alt="Restaurante Universitário"/>
+
+      <p class="section-title">Comprar Ticket</p>
+
+      <div class="card">
+        <!-- Stepper -->
+        <div class="stepper">
+          <div class="step active" id="step-1">
+            <div class="step-circle"><span class="num">1</span></div>
+            <div class="step-label">Tipo de refeição</div>
+          </div>
+          <div class="step" id="step-2">
+            <div class="step-circle"><span class="num">2</span></div>
+            <div class="step-label">Quantidade</div>
+          </div>
+          <div class="step" id="step-3">
+            <div class="step-circle"><span class="num">3</span></div>
+            <div class="step-label">Pagamento</div>
+          </div>
+          <div class="step" id="step-4">
+            <div class="step-circle"><span class="num">4</span></div>
+            <div class="step-label">Confirmação</div>
+          </div>
+        </div>
+
+        <!-- ABA 1 -->
+        <div class="tab" id="tab-1">
+          <div class="selection-header">
+            <h3>Selecione o tipo de refeição</h3>
+            <p>Escolha o tipo de ticket que deseja comprar.</p>
+          </div>
+          <div class="meal-grid">
+            <div class="meal-card selected" onclick="selectMeal(this)">
+              <div class="meal-radio"></div>
+              <div class="meal-icon blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                  <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+              </div>
+              <p class="refeicao">Café da Manhã</p>
+              <p class="ticket-desc">Ticket válido para o café da manhã no Restaurante Universitário.</p>
+              <p class="preco-ticket">R$ 1,00</p>
+            </div>
+            <div class="meal-card" onclick="selectMeal(this)">
+              <div class="meal-radio"></div>
+              <div class="meal-icon yellow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                  <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+              </div>
+              <p class="refeicao">Almoço</p>
+              <p class="ticket-desc">Ticket válido para o almoço no Restaurante Universitário.</p>
+              <p class="preco-ticket">R$ 1,00</p>
+            </div>
+            <div class="meal-card" onclick="selectMeal(this)">
+              <div class="meal-radio"></div>
+              <div class="meal-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                  <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+              </div>
+              <p class="refeicao">Jantar</p>
+              <p class="ticket-desc">Ticket válido para o jantar no Restaurante Universitário.</p>
+              <p class="preco-ticket">R$ 1,00</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn-primary" onclick="goToStep(2)">
+              Continuar
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ABA 2 -->
+        <div class="tab hidden" id="tab-2">
+          <div class="selection-header">
+            <h3>Escolha a quantidade</h3>
+            <p>Selecione quantos tickets deseja comprar.</p>
+          </div>
+          <div class="selected-summary">
+            <div class="summary-icon" id="summary-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+              </svg>
+            </div>
+            <div class="summary-info">
+              <p class="summary-label">Tipo selecionado</p>
+              <p class="summary-value" id="summary-name">Café da Manhã</p>
+            </div>
+            <div class="summary-price-block">
+              <p class="summary-label">Valor unitário</p>
+              <p class="summary-unit-price" id="summary-unit-price">R$ 1,00</p>
+            </div>
+            <button class="btn-change" onclick="goToStep(1)">Alterar</button>
+          </div>
+          <div class="qty-section">
+            <p class="qty-label">Quantidade de tickets</p>
+            <p class="qty-hint">Você pode comprar até 5 tickets por vez.</p>
+            <div class="qty-options">
+              <div class="qty-card selected-qty" onclick="selectQty(this, 1)"><span class="qty-number">1</span><span class="qty-sub">ticket</span></div>
+              <div class="qty-card" onclick="selectQty(this, 2)"><span class="qty-number">2</span><span class="qty-sub">tickets</span></div>
+              <div class="qty-card" onclick="selectQty(this, 3)"><span class="qty-number">3</span><span class="qty-sub">tickets</span></div>
+              <div class="qty-card" onclick="selectQty(this, 4)"><span class="qty-number">4</span><span class="qty-sub">tickets</span></div>
+              <div class="qty-card" onclick="selectQty(this, 5)"><span class="qty-number">5</span><span class="qty-sub">tickets</span></div>
+            </div>
+          </div>
+          <div class="total-box">
+            <div class="total-row"><span class="total-label">Subtotal</span><span class="total-value" id="subtotal">R$ 1,00</span></div>
+            <div class="total-divider"></div>
+            <div class="total-row"><span class="total-final-label">Total</span><span class="total-final" id="total">R$ 1,00</span></div>
+          </div>
+          <div class="card-footer two-buttons">
+            <button class="btn-secondary" onclick="goToStep(1)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              </svg>
+              Voltar
+            </button>
+            <button class="btn-primary" onclick="goToStep(3)">
+              Continuar
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ABA 3 -->
+        <div class="tab hidden" id="tab-3">
+          <div class="selection-header">
+            <h3>Forma de pagamento</h3>
+            <p>Escolha como deseja pagar pelo seu ticket.</p>
+          </div>
+
+          <div class="payment-options">
+            <div class="payment-option" id="opt-cartao" onclick="selectPayment('cartao')">
+              <div class="payment-radio"></div>
+              <div class="payment-option-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                </svg>
+              </div>
+              <div>
+                <p class="payment-option-name">Cartão de crédito/débito</p>
+                <p class="payment-option-desc">Visa, Mastercard, Elo e outros</p>
+              </div>
+            </div>
+            <div class="payment-option" id="opt-pix" onclick="selectPayment('pix')">
+              <div class="payment-radio"></div>
+              <div class="payment-option-icon pix-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <div>
+                <p class="payment-option-name">Pix</p>
+                <p class="payment-option-desc">Pagamento instantâneo</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="payment-hint" class="payment-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Selecione uma forma de pagamento acima para continuar.
+          </div>
+
+          <!-- Formulário Cartão -->
+          <div id="form-cartao" class="hidden">
+            <!-- Cartões salvos -->
+            <div class="saved-cards-section" id="saved-cards-in-checkout">
+              <p class="saved-cards-title">Cartões salvos</p>
+              <div id="checkout-saved-cards-list"></div>
+              <div class="divider-or" id="new-card-divider">ou use um novo cartão</div>
+            </div>
+
+            <div class="form-section-title">Dados do cartão</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label>Número do cartão</label>
+                <div class="input-icon-wrap">
+                  <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)"/>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="form-group full">
+                <label>Nome do titular</label>
+                <input type="text" placeholder="Nome como está no cartão"/>
+              </div>
+              <div class="form-group">
+                <label>Validade</label>
+                <input type="text" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this)"/>
+              </div>
+              <div class="form-group">
+                <label>CVV</label>
+                <div class="input-icon-wrap">
+                  <input type="text" placeholder="000" maxlength="3"/>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="form-group full" style="margin-top:4px;">
+              <label>Parcelamento</label>
+              <select>
+                <option>1x de R$ 1,00 (sem juros)</option>
+                <option>2x de R$ 0,50 (sem juros)</option>
+              </select>
+            </div>
+
+            <!-- Save card checkbox -->
+            <div class="save-card-row" onclick="toggleSaveCard()">
+              <input type="checkbox" id="save-card-checkbox"/>
+              <div>
+                <label for="save-card-checkbox">Salvar cartão para próximas compras</label><br>
+                <span>Seus dados ficam protegidos e criptografados.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulário Pix -->
+          <div id="form-pix" class="hidden">
+            <div class="form-section-title">Pagamento via Pix</div>
+            <div class="pix-container">
+              <div class="pix-info">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                Escaneie o QR Code abaixo com o app do seu banco ou copie o código Pix.
+              </div>
+              <div class="qr-wrapper">
+                <div class="qr-code">
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="160" height="160">
+                    <rect x="5" y="5" width="30" height="30" rx="3" fill="none" stroke="#111827" stroke-width="3"/>
+                    <rect x="12" y="12" width="16" height="16" rx="1" fill="#111827"/>
+                    <rect x="65" y="5" width="30" height="30" rx="3" fill="none" stroke="#111827" stroke-width="3"/>
+                    <rect x="72" y="12" width="16" height="16" rx="1" fill="#111827"/>
+                    <rect x="5" y="65" width="30" height="30" rx="3" fill="none" stroke="#111827" stroke-width="3"/>
+                    <rect x="12" y="72" width="16" height="16" rx="1" fill="#111827"/>
+                    <rect x="42" y="5" width="6" height="6" fill="#111827"/>
+                    <rect x="52" y="5" width="6" height="6" fill="#111827"/>
+                    <rect x="42" y="15" width="6" height="6" fill="#111827"/>
+                    <rect x="52" y="25" width="6" height="6" fill="#111827"/>
+                    <rect x="42" y="35" width="6" height="6" fill="#111827"/>
+                    <rect x="52" y="45" width="6" height="6" fill="#111827"/>
+                    <rect x="42" y="55" width="6" height="6" fill="#111827"/>
+                    <rect x="65" y="42" width="6" height="6" fill="#111827"/>
+                    <rect x="75" y="42" width="6" height="6" fill="#111827"/>
+                    <rect x="85" y="42" width="6" height="6" fill="#111827"/>
+                    <rect x="65" y="52" width="6" height="6" fill="#111827"/>
+                    <rect x="75" y="62" width="6" height="6" fill="#111827"/>
+                    <rect x="85" y="52" width="6" height="6" fill="#111827"/>
+                    <rect x="42" y="65" width="6" height="6" fill="#111827"/>
+                    <rect x="52" y="65" width="6" height="6" fill="#111827"/>
+                    <rect x="42" y="75" width="6" height="6" fill="#111827"/>
+                    <rect x="52" y="85" width="6" height="6" fill="#111827"/>
+                    <rect x="42" y="85" width="6" height="6" fill="#111827"/>
+                    <rect x="62" y="75" width="6" height="6" fill="#111827"/>
+                    <rect x="72" y="85" width="6" height="6" fill="#111827"/>
+                    <rect x="82" y="75" width="6" height="6" fill="#111827"/>
+                    <rect x="92" y="85" width="6" height="6" fill="#111827"/>
+                    <rect x="5" y="42" width="6" height="6" fill="#111827"/>
+                    <rect x="15" y="42" width="6" height="6" fill="#111827"/>
+                    <rect x="25" y="52" width="6" height="6" fill="#111827"/>
+                    <rect x="5" y="52" width="6" height="6" fill="#111827"/>
+                    <rect x="15" y="62" width="6" height="6" fill="#111827"/>
+                    <rect x="25" y="42" width="6" height="6" fill="#111827"/>
+                  </svg>
+                </div>
+                <p class="qr-valor">R$ <span id="pix-valor">1,00</span></p>
+                <p class="qr-expiry">QR Code válido por <strong>30 minutos</strong></p>
+              </div>
+              <div class="pix-copy-section">
+                <p class="pix-copy-label">Ou copie o código Pix:</p>
+                <div class="pix-copy-box">
+                  <span class="pix-code" id="pix-code">00020126580014br.gov.bcb.pix0136a629532e-7693-4846-b028-f142ac102b48520400005303986540</span>
+                  <button class="btn-copy" onclick="copyPix()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                    </svg>
+                    <span id="copy-text">Copiar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer two-buttons">
+            <button class="btn-secondary" onclick="goToStep(2)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              </svg>
+              Voltar
+            </button>
+            <button class="btn-primary" onclick="goToStep(4)">
+              Confirmar pagamento
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ABA 4: CONFIRMAÇÃO -->
+        <div class="tab hidden" id="tab-4">
+          <div class="placeholder-tab">
+            <div class="placeholder-icon success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h3>Pagamento confirmado!</h3>
+            <p style="color:var(--muted);font-size:14px;">Seus tickets foram adicionados à sua conta com sucesso.</p>
+            <div style="display:flex;gap:12px;margin-top:12px;">
+              <button class="btn-secondary" onclick="goToStep(3)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                </svg>
+                Voltar
+              </button>
+              <button class="btn-primary" onclick="showPage('meus-tickets')">Ver Meus Tickets</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Ticket Purchase Card -->
-    <p class="section-title">Comprar Ticket</p>
-
-    <div class="card">
-
-      <!-- Stepper -->
-      <div class="stepper">
-        <div class="step active">
-          <div class="step-circle">1</div>
-          <div class="step-label">Tipo de refeição</div>
+    <!-- ═══════════════════════════ MEUS TICKETS ═══════════════════════════ -->
+    <div class="page" id="page-meus-tickets">
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1>Meus Tickets</h1>
+          <p>Visualize e gerencie seus tickets disponíveis e utilizados.</p>
         </div>
-        <div class="step">
-          <div class="step-circle">2</div>
-          <div class="step-label">Quantidade</div>
-        </div>
-        <div class="step">
-          <div class="step-circle">3</div>
-          <div class="step-label">Pagamento</div>
-        </div>
-        <div class="step">
-          <div class="step-circle">4</div>
-          <div class="step-label">Confirmação</div>
-        </div>
-      </div>
-
-      <!-- Meal Selection -->
-      <div class="selection-header">
-        <h3>Selecione o tipo de refeição</h3>
-        <p>Escolha o tipo de ticket que deseja comprar.</p>
-      </div>
-
-      <div class="meal-grid">
-
-        <div class="meal-card selected" onclick="selectMeal(this)">
-          <div class="meal-radio"></div>
-          <div class="meal-icon blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8h1a4 4 0 010 8h-1"/>
-              <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-              <line x1="6" y1="1" x2="6" y2="4"/>
-              <line x1="10" y1="1" x2="10" y2="4"/>
-              <line x1="14" y1="1" x2="14" y2="4"/>
-            </svg>
-          </div>
-          <p class="refeicao">Café da Manhã</p>
-          <p class="ticket-desc">Ticket válido para o café da manhã no Restaurante Universitário.</p>
-          <p class="preco-ticket">R$ 1,00</p>
-        </div>
-
-        <div class="meal-card" onclick="selectMeal(this)">
-          <div class="meal-radio"></div>
-          <div class="meal-icon yellow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8h1a4 4 0 010 8h-1"/>
-              <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-              <line x1="6" y1="1" x2="6" y2="4"/>
-              <line x1="10" y1="1" x2="10" y2="4"/>
-              <line x1="14" y1="1" x2="14" y2="4"/>
-            </svg>
-          </div>
-          <p class="refeicao">Almoço</p>
-          <p class="ticket-desc">Ticket válido para o almoço no Restaurante Universitário.</p>
-          <p class="preco-ticket">R$ 1,00</p>
-        </div>
-
-        <div class="meal-card" onclick="selectMeal(this)">
-          <div class="meal-radio"></div>
-          <div class="meal-icon green">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8h1a4 4 0 010 8h-1"/>
-              <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-              <line x1="6" y1="1" x2="6" y2="4"/>
-              <line x1="10" y1="1" x2="10" y2="4"/>
-              <line x1="14" y1="1" x2="14" y2="4"/>
-            </svg>
-          </div>
-          <p class="refeicao">Jantar</p>
-          <p class="ticket-desc">Ticket válido para o jantar no Restaurante Universitário.</p>
-          <p class="preco-ticket">R$ 1,00</p>
-        </div>
-
-      </div>
-
-      <!-- Footer -->
-      <div class="card-footer">
-        <button class="btn-primary">
-          Continuar
+        <button class="btn-primary" onclick="showPage('comprar')">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
+          Comprar Ticket
         </button>
       </div>
 
+      <div class="tickets-filter-row">
+        <button class="filter-btn active" onclick="filterTickets('todos', this)">Todos</button>
+        <button class="filter-btn" onclick="filterTickets('disponivel', this)">Disponíveis</button>
+        <button class="filter-btn" onclick="filterTickets('usado', this)">Utilizados</button>
+        <button class="filter-btn" onclick="filterTickets('expirado', this)">Expirados</button>
+      </div>
+
+      <div class="tickets-grid" id="tickets-grid">
+        <!-- Gerados via JS -->
+      </div>
     </div>
+
+    <!-- ═══════════════════════════ HISTÓRICO ═══════════════════════════ -->
+    <div class="page" id="page-historico">
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1>Histórico</h1>
+          <p>Acompanhe todos os tickets comprados e utilizados.</p>
+        </div>
+      </div>
+
+      <div class="history-stats">
+        <div class="stat-card">
+          <p class="stat-label">Total de tickets comprados</p>
+          <p class="stat-value blue">12</p>
+          <p class="stat-sub">Desde o início do semestre</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Tickets utilizados</p>
+          <p class="stat-value green">9</p>
+          <p class="stat-sub">75% de aproveitamento</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Total gasto</p>
+          <p class="stat-value text">R$ 12,00</p>
+          <p class="stat-sub">Média R$ 1,00 por refeição</p>
+        </div>
+      </div>
+
+      <div class="history-table-wrap">
+        <div class="history-table-header">
+          <h3>Todas as transações</h3>
+          <div class="search-input-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Buscar por tipo..." oninput="filterHistory(this.value)"/>
+          </div>
+        </div>
+
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Código</th>
+              <th>Comprado em</th>
+              <th>Utilizado em</th>
+              <th>Horário de uso</th>
+              <th>Status</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- Gerado via JS -->
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span class="pagination-info" id="pagination-info">Mostrando 1–10 de 12</span>
+          <div class="pagination-btns">
+            <button class="page-btn" disabled>‹</button>
+            <button class="page-btn active-page">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════ SALDO E PAGAMENTOS ═══════════════════════════ -->
+    <div class="page" id="page-pagamentos">
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1>Saldo e Pagamentos</h1>
+          <p>Gerencie seus cartões e acompanhe seus pagamentos.</p>
+        </div>
+      </div>
+
+      <div class="balance-hero">
+        <div class="balance-hero-left">
+          <h3>Saldo disponível</h3>
+          <div class="balance-amount">R$ 0,00</div>
+          <p class="balance-sub">Tickets ativos: <strong>3</strong> · Valor em tickets: R$ 3,00</p>
+        </div>
+        <div class="balance-hero-right">
+          <button class="btn-white" onclick="showPage('comprar')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Comprar Ticket
+          </button>
+          <button class="btn-white-outline" onclick="showPage('historico')">Ver Histórico</button>
+        </div>
+      </div>
+
+      <div class="payments-grid">
+        <!-- Cartões salvos -->
+        <div class="payments-section-card">
+          <div class="payments-section-header">
+            <h3>Cartões salvos</h3>
+            <button class="btn-add-small" onclick="openAddCardModal()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Adicionar cartão
+            </button>
+          </div>
+          <div class="saved-card-list" id="saved-cards-display">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+
+        <!-- Últimas transações -->
+        <div class="payments-section-card">
+          <div class="payments-section-header">
+            <h3>Últimas transações</h3>
+          </div>
+          <div class="transactions-list">
+            <div class="transaction-item">
+              <div class="transaction-icon tx-buy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </div>
+              <div class="transaction-info">
+                <p class="transaction-title">Compra de ticket – Almoço</p>
+                <p class="transaction-date">Hoje, 10:45 · Cartão •••• 1234</p>
+              </div>
+              <span class="transaction-amount amount-neg">-R$ 1,00</span>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-icon tx-buy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </div>
+              <div class="transaction-info">
+                <p class="transaction-title">Compra de ticket – Café da Manhã</p>
+                <p class="transaction-date">Ontem, 08:12 · Pix</p>
+              </div>
+              <span class="transaction-amount amount-neg">-R$ 1,00</span>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-icon tx-buy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </div>
+              <div class="transaction-info">
+                <p class="transaction-title">Compra de 3 tickets – Jantar</p>
+                <p class="transaction-date">23/05/2026, 19:30 · Cartão •••• 5678</p>
+              </div>
+              <span class="transaction-amount amount-neg">-R$ 3,00</span>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-icon tx-refund">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+                </svg>
+              </div>
+              <div class="transaction-info">
+                <p class="transaction-title">Estorno – Ticket expirado</p>
+                <p class="transaction-date">20/05/2026, 14:00 · Automático</p>
+              </div>
+              <span class="transaction-amount amount-pos">+R$ 1,00</span>
+            </div>
+            <div class="transaction-item">
+              <div class="transaction-icon tx-buy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1A56DB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+              </div>
+              <div class="transaction-info">
+                <p class="transaction-title">Compra de ticket – Almoço</p>
+                <p class="transaction-date">18/05/2026, 11:22 · Cartão •••• 1234</p>
+              </div>
+              <span class="transaction-amount amount-neg">-R$ 1,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
+  <!-- ═══ MODAL: QR Code do ticket ═══ -->
+  <div class="modal-backdrop" id="qr-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Ticket QR Code</h3>
+        <button class="modal-close" onclick="closeModal('qr-modal')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="qr-modal-content">
+        <p class="qr-ticket-type" id="modal-ticket-type">Almoço</p>
+        <p class="qr-ticket-date" id="modal-ticket-date">Comprado em 26/05/2026</p>
+        <div class="qr-code" style="margin:8px 0;">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+            <rect x="5" y="5" width="30" height="30" rx="3" fill="none" stroke="#111827" stroke-width="3"/>
+            <rect x="12" y="12" width="16" height="16" rx="1" fill="#111827"/>
+            <rect x="65" y="5" width="30" height="30" rx="3" fill="none" stroke="#111827" stroke-width="3"/>
+            <rect x="72" y="12" width="16" height="16" rx="1" fill="#111827"/>
+            <rect x="5" y="65" width="30" height="30" rx="3" fill="none" stroke="#111827" stroke-width="3"/>
+            <rect x="12" y="72" width="16" height="16" rx="1" fill="#111827"/>
+            <rect x="42" y="5" width="6" height="6" fill="#111827"/>
+            <rect x="52" y="5" width="6" height="6" fill="#111827"/>
+            <rect x="42" y="15" width="6" height="6" fill="#111827"/>
+            <rect x="52" y="35" width="6" height="6" fill="#111827"/>
+            <rect x="42" y="55" width="6" height="6" fill="#111827"/>
+            <rect x="65" y="42" width="6" height="6" fill="#111827"/>
+            <rect x="85" y="52" width="6" height="6" fill="#111827"/>
+            <rect x="42" y="75" width="6" height="6" fill="#111827"/>
+            <rect x="62" y="75" width="6" height="6" fill="#111827"/>
+            <rect x="82" y="85" width="6" height="6" fill="#111827"/>
+            <rect x="5" y="42" width="6" height="6" fill="#111827"/>
+            <rect x="25" y="52" width="6" height="6" fill="#111827"/>
+            <rect x="15" y="62" width="6" height="6" fill="#111827"/>
+          </svg>
+        </div>
+        <p class="qr-ticket-code" id="modal-ticket-code">#RU-2026-0001</p>
+        <p style="font-size:13px;color:var(--muted);max-width:260px;line-height:1.5;">Apresente este QR Code no balcão do Restaurante Universitário.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('qr-modal')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: Adicionar cartão ═══ -->
+  <div class="modal-backdrop" id="add-card-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Adicionar cartão</h3>
+        <button class="modal-close" onclick="closeModal('add-card-modal')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="form-group full">
+          <label>Número do cartão</label>
+          <div class="input-icon-wrap">
+            <input type="text" id="new-card-number" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)"/>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Nome do titular</label>
+          <input type="text" id="new-card-name" placeholder="Nome como está no cartão"/>
+        </div>
+        <div class="form-group">
+          <label>Validade</label>
+          <input type="text" id="new-card-expiry" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this)"/>
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="text" id="new-card-cvv" placeholder="000" maxlength="3"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('add-card-modal')">Cancelar</button>
+        <button class="btn-primary" onclick="addCardFromModal()">Salvar cartão</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // ════════════════════════════════
+    //  DATA
+    // ════════════════════════════════
+    let savedCards = [
+      { id: 1, number: '•••• •••• •••• 1234', name: 'João da Silva', expiry: '08/27', brand: 'VISA', isDefault: true },
+      { id: 2, number: '•••• •••• •••• 5678', name: 'João da Silva', expiry: '03/26', brand: 'MSTR', isDefault: false },
+    ];
+
+    const ticketsData = [
+      { id: 'RU-2026-001', type: 'Almoço',       typeClass: 'almoco',  status: 'disponivel', buyDate: '26/05/2026', buyTime: '10:45', useDate: null,       useTime: null,  price: 'R$ 1,00' },
+      { id: 'RU-2026-002', type: 'Café da Manhã', typeClass: 'cafe',   status: 'disponivel', buyDate: '26/05/2026', buyTime: '10:45', useDate: null,       useTime: null,  price: 'R$ 1,00' },
+      { id: 'RU-2026-003', type: 'Jantar',        typeClass: 'jantar', status: 'disponivel', buyDate: '25/05/2026', buyTime: '19:00', useDate: null,       useTime: null,  price: 'R$ 1,00' },
+      { id: 'RU-2026-004', type: 'Almoço',        typeClass: 'almoco', status: 'usado',      buyDate: '24/05/2026', buyTime: '09:30', useDate: '24/05/2026', useTime: '12:02', price: 'R$ 1,00' },
+      { id: 'RU-2026-005', type: 'Café da Manhã', typeClass: 'cafe',   status: 'usado',      buyDate: '23/05/2026', buyTime: '07:55', useDate: '23/05/2026', useTime: '07:58', price: 'R$ 1,00' },
+      { id: 'RU-2026-006', type: 'Jantar',        typeClass: 'jantar', status: 'usado',      buyDate: '22/05/2026', buyTime: '18:40', useDate: '22/05/2026', useTime: '19:15', price: 'R$ 1,00' },
+      { id: 'RU-2026-007', type: 'Almoço',        typeClass: 'almoco', status: 'usado',      buyDate: '21/05/2026', buyTime: '11:00', useDate: '21/05/2026', useTime: '12:10', price: 'R$ 1,00' },
+      { id: 'RU-2026-009', type: 'Almoço',        typeClass: 'almoco', status: 'usado',      buyDate: '17/05/2026', buyTime: '10:20', useDate: '17/05/2026', useTime: '12:05', price: 'R$ 1,00' },
+    ];
+
+    const mealIcons = {
+      cafe:   { color: '#1A56DB', bg: 'blue-icon' },
+      almoco: { color: '#F5A623', bg: 'yellow-icon' },
+      jantar: { color: '#22C55E', bg: 'green-icon' },
+    };
+
+    // ════════════════════════════════
+    //  NAVIGATION
+    // ════════════════════════════════
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById('page-' + pageId).classList.add('active');
+
+      const map = { inicio: 0, comprar: 1, 'meus-tickets': 2, historico: 3, pagamentos: 4 };
+      const idx = map[pageId];
+      if (idx !== undefined) {
+        document.querySelectorAll('.nav-item')[idx].classList.add('active');
+      }
+
+      if (pageId === 'meus-tickets') renderTickets('todos');
+      if (pageId === 'historico')    renderHistory();
+      if (pageId === 'pagamentos')   renderSavedCards();
+      if (pageId === 'comprar')      renderCheckoutSavedCards();
+    }
+
+    // ════════════════════════════════
+    //  MEUS TICKETS
+    // ════════════════════════════════
+    let currentFilter = 'todos';
+
+    function renderTickets(filter) {
+      currentFilter = filter;
+      const grid = document.getElementById('tickets-grid');
+      const filtered = filter === 'todos' ? ticketsData : ticketsData.filter(t => t.status === filter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <h3>Nenhum ticket encontrado</h3>
+          <p>Não há tickets com esse status.</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(t => {
+        const icon = mealIcons[t.typeClass];
+        const isUsed = t.status !== 'disponivel';
+        const badgeClass = t.status === 'disponivel' ? 'badge-disponivel' : t.status === 'usado' ? 'badge-usado' : 'badge-expirado';
+        const badgeLabel = t.status === 'disponivel' ? 'Disponível' : t.status === 'usado' ? 'Utilizado' : 'Expirado';
+
+        return `<div class="ticket-item">
+          <div class="ticket-item-header">
+            <div class="ticket-type-icon ${icon.bg}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="${icon.color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 010 8h-1"/>
+                <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+                <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+              </svg>
+            </div>
+            <div class="ticket-item-info">
+              <p class="ticket-item-type">${t.type}</p>
+              <p class="ticket-item-date">Comprado em ${t.buyDate} às ${t.buyTime}</p>
+            </div>
+            <span class="ticket-status-badge ${badgeClass}">${badgeLabel}</span>
+          </div>
+          <div class="ticket-item-body">
+            <span class="ticket-code">#${t.id}</span>
+            <span class="ticket-price">${t.price}</span>
+          </div>
+          ${t.status === 'disponivel'
+            ? `<button class="ticket-qr-btn" onclick="openQRModal('${t.id}','${t.type}','${t.buyDate}')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="21" y2="14"/>
+                  <line x1="14" y1="21" x2="21" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/>
+                </svg>
+                Ver QR Code
+              </button>`
+            : `<button class="ticket-qr-btn used" disabled>
+                ${t.status === 'usado' ? `Utilizado em ${t.useDate} às ${t.useTime}` : 'Ticket expirado'}
+              </button>`
+          }
+        </div>`;
+      }).join('');
+    }
+
+    function filterTickets(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTickets(filter);
+    }
+
+    // ════════════════════════════════
+    //  HISTÓRICO
+    // ════════════════════════════════
+    function renderHistory(searchVal = '') {
+      const tbody = document.getElementById('history-tbody');
+      const filtered = ticketsData.filter(t => !searchVal || t.type.toLowerCase().includes(searchVal.toLowerCase()));
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--muted);">Nenhum registro encontrado.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(t => {
+        const chipClass = { cafe: 'chip-cafe', almoco: 'chip-almoco', jantar: 'chip-jantar' }[t.typeClass];
+        const dotClass  = t.status === 'disponivel' ? 'dot-green' : t.status === 'usado' ? 'dot-gray' : 'dot-red';
+        const statusLabel = t.status === 'disponivel' ? 'Disponível' : t.status === 'usado' ? 'Utilizado' : 'Expirado';
+
+        return `<tr>
+          <td><span class="type-chip ${chipClass}">${t.type}</span></td>
+          <td style="font-family:monospace;font-size:13px;color:var(--muted);">#${t.id}</td>
+          <td>${t.buyDate}<br><span style="font-size:12px;color:var(--muted);">${t.buyTime}</span></td>
+          <td>${t.useDate || '—'}</td>
+          <td>${t.useTime || '—'}</td>
+          <td><span class="status-dot"><span class="dot ${dotClass}"></span>${statusLabel}</span></td>
+          <td style="font-weight:700;color:var(--blue);">${t.price}</td>
+        </tr>`;
+      }).join('');
+
+      document.getElementById('pagination-info').textContent = `Mostrando 1–${filtered.length} de ${filtered.length}`;
+    }
+
+    function filterHistory(val) { renderHistory(val); }
+
+    // ════════════════════════════════
+    //  CARTÕES SALVOS
+    // ════════════════════════════════
+    function renderSavedCards() {
+      const container = document.getElementById('saved-cards-display');
+      if (savedCards.length === 0) {
+        container.innerHTML = `<div style="padding:24px;text-align:center;color:var(--muted);font-size:14px;">
+          Nenhum cartão salvo. Clique em "Adicionar cartão" para começar.
+        </div>`;
+        return;
+      }
+
+      container.innerHTML = savedCards.map(c => `
+        <div class="saved-card-row">
+          <div class="card-visual">
+            <svg viewBox="0 0 24 16" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="1" width="22" height="14" rx="2"/>
+              <line x1="1" y1="6" x2="23" y2="6"/>
+            </svg>
+          </div>
+          <div class="saved-card-details">
+            <p class="saved-card-name">${c.number}</p>
+            <p class="saved-card-meta">${c.name} · Válido até ${c.expiry}</p>
+          </div>
+          ${c.isDefault ? '<span class="default-badge">Padrão</span>' : `<button class="btn-change" style="margin-left:0;" onclick="setDefaultCard(${c.id})">Definir padrão</button>`}
+          <div class="card-actions">
+            <button class="action-icon-btn" onclick="removeCard(${c.id})" title="Remover cartão">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+                <path d="M10 11v6"/><path d="M14 11v6"/>
+                <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderCheckoutSavedCards() {
+      const list = document.getElementById('checkout-saved-cards-list');
+      const section = document.getElementById('saved-cards-in-checkout');
+
+      if (savedCards.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      list.innerHTML = savedCards.map(c => `
+        <div class="saved-card-option" onclick="selectSavedCardCheckout(this)">
+          <div class="saved-card-radio"></div>
+          <span class="card-brand-badge">${c.brand}</span>
+          <div class="saved-card-info">
+            <p class="saved-card-number">${c.number}</p>
+            <p class="saved-card-expiry">Válido até ${c.expiry}</p>
+          </div>
+          ${c.isDefault ? '<span style="font-size:11px;color:var(--green);font-weight:700;">Padrão</span>' : ''}
+        </div>
+      `).join('');
+    }
+
+    function selectSavedCardCheckout(el) {
+      document.querySelectorAll('.saved-card-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('new-card-divider').textContent = 'ou insira um novo cartão';
+    }
+
+    function setDefaultCard(id) {
+      savedCards.forEach(c => c.isDefault = c.id === id);
+      renderSavedCards();
+    }
+
+    function removeCard(id) {
+      if (confirm('Remover este cartão?')) {
+        savedCards = savedCards.filter(c => c.id !== id);
+        renderSavedCards();
+        renderCheckoutSavedCards();
+      }
+    }
+
+    function openAddCardModal() {
+      document.getElementById('add-card-modal').classList.add('open');
+    }
+
+    function addCardFromModal() {
+      const num    = document.getElementById('new-card-number').value.trim();
+      const name   = document.getElementById('new-card-name').value.trim();
+      const expiry = document.getElementById('new-card-expiry').value.trim();
+
+      if (!num || !name || !expiry) { alert('Preencha todos os campos obrigatórios.'); return; }
+
+      const last4 = num.replace(/\s/g, '').slice(-4);
+      savedCards.push({
+        id: Date.now(),
+        number: `•••• •••• •••• ${last4}`,
+        name,
+        expiry,
+        brand: 'VISA',
+        isDefault: savedCards.length === 0,
+      });
+
+      closeModal('add-card-modal');
+      renderSavedCards();
+      renderCheckoutSavedCards();
+
+      // Clear fields
+      document.getElementById('new-card-number').value = '';
+      document.getElementById('new-card-name').value   = '';
+      document.getElementById('new-card-expiry').value = '';
+      document.getElementById('new-card-cvv').value    = '';
+    }
+
+    // ════════════════════════════════
+    //  MODALS
+    // ════════════════════════════════
+    function openQRModal(id, type, date) {
+      document.getElementById('modal-ticket-type').textContent = type;
+      document.getElementById('modal-ticket-date').textContent = `Comprado em ${date}`;
+      document.getElementById('modal-ticket-code').textContent = `#${id}`;
+      document.getElementById('qr-modal').classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    // Close modal on backdrop click
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+      backdrop.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('open');
+      });
+    });
+
+    // ════════════════════════════════
+    //  COMPRAR TICKET (original logic)
+    // ════════════════════════════════
+    let currentStep = 1;
+    let selectedQty = 1;
+    let unitPrice   = 1.00;
+
+    function goToStep(step) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+      document.getElementById('tab-' + step).classList.remove('hidden');
+
+      document.querySelectorAll('.step').forEach((s, i) => {
+        s.classList.remove('active', 'done');
+        if (i + 1 < step)  s.classList.add('done');
+        if (i + 1 === step) s.classList.add('active');
+      });
+
+      if (step === 2) updateSummary();
+      if (step === 3) {
+        updatePixValor();
+        renderCheckoutSavedCards();
+        document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+        document.getElementById('form-cartao').classList.add('hidden');
+        document.getElementById('form-pix').classList.add('hidden');
+        document.getElementById('payment-hint').classList.remove('hidden');
+      }
+      currentStep = step;
+    }
+
     function selectMeal(card) {
       document.querySelectorAll('.meal-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
     }
-  </script>
 
+    function selectQty(card, qty) {
+      document.querySelectorAll('.qty-card').forEach(c => c.classList.remove('selected-qty'));
+      card.classList.add('selected-qty');
+      selectedQty = qty;
+      updateTotal();
+    }
+
+    function updateSummary() {
+      const selected = document.querySelector('.meal-card.selected');
+      if (!selected) return;
+      document.getElementById('summary-name').textContent       = selected.querySelector('.refeicao').textContent;
+      document.getElementById('summary-unit-price').textContent = selected.querySelector('.preco-ticket').textContent;
+      unitPrice = parseFloat(selected.querySelector('.preco-ticket').textContent.replace('R$','').replace(',','.').trim());
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const total = (unitPrice * selectedQty).toFixed(2).replace('.', ',');
+      document.getElementById('subtotal').textContent = 'R$ ' + total;
+      document.getElementById('total').textContent    = 'R$ ' + total;
+    }
+
+    function selectPayment(type) {
+      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+      document.getElementById('opt-' + type).classList.add('selected');
+      document.getElementById('form-cartao').classList.add('hidden');
+      document.getElementById('form-pix').classList.add('hidden');
+      document.getElementById('form-' + type).classList.remove('hidden');
+      document.getElementById('payment-hint').classList.add('hidden');
+    }
+
+    function updatePixValor() {
+      const total = (unitPrice * selectedQty).toFixed(2).replace('.', ',');
+      document.getElementById('pix-valor').textContent = total;
+    }
+
+    function copyPix() {
+      const code = document.getElementById('pix-code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copy-text');
+        btn.textContent = 'Copiado!';
+        setTimeout(() => btn.textContent = 'Copiar', 2000);
+      });
+    }
+
+    function formatCard(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      input.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function formatExpiry(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.substring(0,2) + '/' + v.substring(2);
+      input.value = v;
+    }
+
+    function toggleSaveCard() {
+      const cb = document.getElementById('save-card-checkbox');
+      cb.checked = !cb.checked;
+    }
+
+    // Init
+    renderHistory();
+    renderSavedCards();
+  </script>
 </body>
 </html>
